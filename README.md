@@ -1,1 +1,1 @@
-![Screenshot](risk.png)
+![Screenshot](risk)
