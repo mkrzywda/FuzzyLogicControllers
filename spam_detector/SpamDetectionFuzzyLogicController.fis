@@ -1,0 +1,109 @@
+[System]
+Name='SpamDetectionFuzzyLogicController'
+Type='mamdani'
+Version=2.0
+NumInputs=7
+NumOutputs=2
+NumRules=20
+AndMethod='prod'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='bisector'
+
+[Input1]
+Name='Following'
+Range=[0 1000000]
+NumMFs=4
+MF1='low':'gaussmf',[141500 0]
+MF2='average':'gaussmf',[141600 333300]
+MF3='medium high':'gaussmf',[141500 666700]
+MF4='high':'pimf',[700100 966700 1100000 1633000]
+
+[Input2]
+Name='Followers'
+Range=[0 1000000]
+NumMFs=4
+MF1='low':'gaussmf',[141500 0]
+MF2='average':'gaussmf',[141600 333300]
+MF3='medium high':'gaussmf',[141500 666700]
+MF4='high':'pimf',[700100 966700 1100000 1633000]
+
+[Input3]
+Name='Tweets'
+Range=[0 1000000]
+NumMFs=4
+MF1='low':'gaussmf',[141500 0]
+MF2='average':'gaussmf',[141600 333300]
+MF3='medium high':'gaussmf',[141500 666700]
+MF4='high':'pimf',[700100 966700 1100000 1633000]
+
+[Input4]
+Name='CountOfWordsInTweet'
+Range=[0 50]
+NumMFs=3
+MF1='low':'gaussmf',[3.02 10]
+MF2='average':'gaussmf',[3.95810921531052 24.7]
+MF3='high':'gaussmf',[5.22400313669219 50]
+
+[Input5]
+Name='CountOfCharsInTweet'
+Range=[0 140]
+NumMFs=3
+MF1='low':'gaussmf',[10.380599781298 15]
+MF2='average':'gaussmf',[14.63 70.3703703703704]
+MF3='high':'gaussmf',[29.7 152.851851851852]
+
+[Input6]
+Name='CountOfTagsInTweet'
+Range=[0 10]
+NumMFs=3
+MF1='low':'gaussmf',[0.2809 -5.55e-17]
+MF2='average':'gaussmf',[1 2]
+MF3='high':'gaussmf',[3 9.974]
+
+[Input7]
+Name='CountOfURLsInTweet'
+Range=[0 6]
+NumMFs=3
+MF1='low':'trimf',[-2.4 0 2.02380952380952]
+MF2='average':'trimf',[2.01 3 4.00793650793651]
+MF3='high':'trimf',[4.03968253968254 6 8.4]
+
+[Output1]
+Name='IsSpam'
+Range=[0 1]
+NumMFs=3
+MF1='low':'trimf',[-0.4 0 0.30026455026455]
+MF2='average':'trimf',[0.292 0.5 0.702380952380952]
+MF3='high':'trimf',[0.702380952380952 0.997 1.4]
+
+[Output2]
+Name='NotSpam'
+Range=[0 1]
+NumMFs=3
+MF1='low':'trimf',[-0.4 0 0.302910052910053]
+MF2='average':'trimf',[0.295 0.5 0.599206349206349]
+MF3='high':'trimf',[0.6 1 1.4]
+
+[Rules]
+1 4 0 0 0 0 0, 3 1 (1) : 1
+2 3 0 0 0 0 0, 2 2 (1) : 1
+3 2 0 0 0 0 0, 1 3 (1) : 1
+4 1 0 0 0 0 0, 1 3 (1) : 1
+0 0 1 0 0 0 0, 1 3 (1) : 1
+0 0 2 0 0 0 0, 2 2 (1) : 1
+0 0 3 0 0 0 0, 3 1 (1) : 1
+0 0 0 1 0 3 0, 3 1 (1) : 1
+0 0 0 2 0 2 0, 2 2 (1) : 1
+0 0 0 3 0 1 0, 1 3 (1) : 1
+0 0 0 0 1 3 3, 3 1 (1) : 1
+0 0 0 0 2 3 3, 2 2 (1) : 1
+0 0 0 0 3 2 2, 2 2 (1) : 1
+0 0 0 0 3 1 1, 1 3 (1) : 1
+0 0 0 0 0 3 3, 3 1 (1) : 1
+0 0 0 0 0 2 2, 2 2 (1) : 1
+0 0 0 0 0 1 1, 1 3 (1) : 1
+0 0 0 0 0 3 0, 3 1 (1) : 1
+0 0 0 0 0 0 3, 3 1 (1) : 1
+0 0 0 1 3 0 0, 3 1 (1) : 1
